@@ -5,6 +5,7 @@ import com.bluemmroom.model.Datasource;
 import com.bluemmroom.model.SongArtist;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -28,7 +29,7 @@ public class Main {
 
         albumsForArtist.forEach(System.out::println);
 
-        List<SongArtist> songArtists = datasource.queryArtistsForSong("Heartless", datasource.ORDER_BY_ASC);
+        List<SongArtist> songArtists = datasource.queryArtistsForSong("Go Your Own Way", datasource.ORDER_BY_ASC);
         if (songArtists == null) {
             System.out.println("Couldn't find the artist for the song");
             return;
@@ -37,6 +38,28 @@ public class Main {
                 " Album name = " + s.getAlbumName() +
                 " Track = " + s.getTrack()));
 
+        datasource.querySongsMetadata();
+
+        datasource.getCount("Songs");
+
+        datasource.createViewForSongArtists();
+
+        // for SQL INJECTION
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a song title: ");
+        String title = scanner.nextLine();
+
+        songArtists = datasource.querySongInfoView(title);
+        if (songArtists.isEmpty()) {
+            System.out.println("Couldn.t find the artist for the song");
+            return;
+        }
+
+        for (SongArtist songArtist : songArtists) {
+            System.out.println("FROM VIEW - Artist name =  " + songArtist.getAlbumName() +
+                    " Album name = " + songArtist.getAlbumName() +
+                    " Track number = " + songArtist.getTrack());
+        }
         datasource.close();
     }
 }
