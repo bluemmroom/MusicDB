@@ -45,7 +45,7 @@ public class Main {
         datasource.createViewForSongArtists();
 
         // for SQL INJECTION
-        Scanner scanner = new Scanner(System.in);
+/*        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a song title: ");
         String title = scanner.nextLine();
 
@@ -59,7 +59,9 @@ public class Main {
             System.out.println("FROM VIEW - Artist name =  " + songArtist.getAlbumName() +
                     " Album name = " + songArtist.getAlbumName() +
                     " Track number = " + songArtist.getTrack());
-        }
+        }*/
+
+        datasource.insertSong("Touch of Grey", "Grateful Dead", "In the Dark", 1);
         datasource.close();
     }
 }
